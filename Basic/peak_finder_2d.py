@@ -32,11 +32,11 @@ def peak_finder_wrapper(x):
 
 # assumption that 'x' is always a 2d array
 def peak_finder_optimized(x, start, end):
-    global_mid_max = x[start[0]][start[1]]
     j = (start[1] + end[1]) // 2
-    mid_max_indices = (start[0], start[1])
+    global_mid_max = x[start[0]][j]
+    mid_max_indices = (start[0], j)
     for i in range(start[0], end[0]+1):
-        if global_mid_max <= x[i][j]:
+        if global_mid_max < x[i][j]:
             global_mid_max = x[i][j]
             mid_max_indices = i, j 
     i, j = mid_max_indices
@@ -51,12 +51,12 @@ if __name__ == '__main__':
     # x = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
     x = np.random.randint(1000, size=(10000, 10000)) 
     start_time = time.time()
-    greedy_answer = greedy_peak_wrapper(x)
-    end_time = time.time() - start_time
-    print('Greedy answer is', greedy_answer)
-    print('Greedy wrapper took', end_time)
-    start_time = time.time()
     optimized_answer = peak_finder_wrapper(x)
     end_time = time.time() - start_time
     print('Optimized answer is', optimized_answer)
     print('Optimized wrapper took', end_time)
+    start_time = time.time()
+    greedy_answer = greedy_peak_wrapper(x)
+    end_time = time.time() - start_time
+    print('Greedy answer is', greedy_answer)
+    print('Greedy wrapper took', end_time)
